@@ -19,21 +19,36 @@ def test_pred_virginica():
         "petal_length": 3.2,
         "petal_width": 4.4,
     }
-    payload1 = {
-        "sepal_length": 2.2,
-        "sepal_width": 4.2,
-        "petal_length": 0.2,
-        "petal_width": 1.4,
-    }
-    payload2 = {
-        "sepal_length": 0.2,
-        "sepal_width": 0.9,
-        "petal_length": 1.2,
-        "petal_width": 0.4,
-    }
-
     with TestClient(app) as client:
-        response = client.post("/predict_flower", json=payload2)
+        response = client.post("/predict_flower", json=payload)
         # asserting the correct response is received
         assert response.status_code == 200
         assert response.json() == {"flower_class": "Iris Virginica"}
+
+def test_pred_setosa():
+    # defining a sample payload for the testcase
+    payload = {
+        "sepal_length": 5.1,
+        "sepal_width": 3.5,
+        "petal_length": 1.4,
+        "petal_width": 0.2,
+    }
+    with TestClient(app) as client:
+        response = client.post("/predict_flower", json=payload)
+        # asserting the correct response is received
+        assert response.status_code == 200
+        assert response.json() == {"flower_class": "Iris Setosa"}
+
+def test_pred_versicolor():
+    # defining a sample payload for the testcase
+    payload = {
+        "sepal_length": 6.3,
+        "sepal_width": 3.3,
+        "petal_length": 4.7,
+        "petal_width": 1.6,
+    }
+    with TestClient(app) as client:
+        response = client.post("/predict_flower", json=payload)
+        # asserting the correct response is received
+        assert response.status_code == 200
+        assert response.json() == {"flower_class": "Iris Versicolor"}
